@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: schulung-project
+  namespace: argocd
+spec:
+  description: GitOps Project for Zeiterfassung application
+
+  # Erlaubte Git-Repositories
+  sourceRepos:
+    - "https://github.com/MARLENELASSEINPHOTOMACHEN/schulung-argocd.git"
+    - "https://github.com/MARLENELASSEINPHOTOMACHEN/schulung.git"
+
+  # Erlaubte Ziel-Cluster & Namespaces
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: "*"
+
+  # Erlaubte Cluster-Ressourcen
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  # Erlaubte Namespace-Ressourcen
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+
+  # Optional: Rollen (RBAC innerhalb des Projekts)
+  # roles:
+  #   - name: developer
+  #     description: Read-only access
+  #     policies:
+  #       - p, proj:schulung-project:developer, applications, get, schulung-project/*, allow
+  #     groups:
+  #       - devs

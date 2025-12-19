@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zeiterfassung
+  namespace: argocd
+spec:
+  project: schulung-project
+
+  source:
+    repoURL: https://github.com/MARLENELASSEINPHOTOMACHEN/schulung.git
+    targetRevision: main
+    path: k8s
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: zeiterfassung
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
